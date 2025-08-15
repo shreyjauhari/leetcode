@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int minDays(vector<int>& nums, int m, int k) {
+        if ((long long)nums.size() < (long long)m * k) return -1;
+
+        long long low = INT_MAX, high = INT_MIN;
+        for (int x : nums) {
+            if (x > high) high = x;
+            if (x < low) low = x;
+        }
+long long mid;
+        while (low < high) {
+             mid = low + (high - low) / 2;
+            long long ans = 0;
+            long long count = 0;
+
+            for (int x : nums) {
+                if (x <= mid) {
+                    count++;
+                    if (count == k) {
+                        ans++;
+                        count = 0;
+                    }
+                } else {
+                    count = 0;
+                }
+            }
+
+            if (ans >= m) {
+                high = mid;  
+            } else {
+                low = mid + 1;
+            }
+        }
+
+        return (int)low;
+    }
+};
