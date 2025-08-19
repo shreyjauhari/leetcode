@@ -1,0 +1,45 @@
+
+if in an array there are 2 zeros atleast the whole array is 0:
+if one zero , every element except that element in the array is zero,
+if no zero just take profuct of whole array and loop it up and divide and replace  at each index 
+
+not the best solution 
+
+best solution is using prefix,suffix 
+
+
+
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int ans=1;
+        int count=0;
+        int a=-1;
+        for(int i=0;i<nums.size();i++){
+           if(nums[i]!=0){ans=ans*nums[i];}
+           if(nums[i]==0){
+            count++;a=i;
+           }
+           if(count==2){
+            for(int i=0;i<nums.size();i++){
+                nums[i]=0;
+            }
+            return nums;
+           }
+        }
+        for(int i=0;i<nums.size();i++){
+            if(nums[i]!=0){nums[i]=ans/nums[i];}
+            
+        }
+        if(count==1){
+            for(int i=0;i<nums.size();i++){
+            if(i!=a)nums[i]=0;
+            else{
+                nums[i]=ans;
+            }
+
+        }}
+         
+        return nums;
+    }
+};
