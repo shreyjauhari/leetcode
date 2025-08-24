@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int shipWithinDays(vector<int>& nums, int D) {
+        int sum = 0;
+        int a = INT_MIN;
+        for (int i = 0; i < nums.size(); i++) {
+            sum += nums[i];
+            a = max(a, nums[i]);
+        }
+
+        int ans = sum;
+        int low = a;
+        int high = sum;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+
+           
+            int days = 1;
+            int load = 0;
+            for (int i = 0; i < nums.size(); i++) {
+                if (load + nums[i] > mid) {
+                    days++;
+                    load = nums[i];
+                } else {
+                    load += nums[i];
+                }
+            }
+
+            if (days <= D) {
+                ans = mid;        
+                high = mid - 1;  
+            } else {
+                low = mid + 1;   
+            }
+        }
+        return ans;
+    }
+};
