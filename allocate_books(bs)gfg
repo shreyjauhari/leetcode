@@ -1,0 +1,41 @@
+ 
+
+class Solution {
+  public: 
+    bool canWeAllocate(vector<int> &arr, int k, int pages) {
+        int students = 1;
+        int pagesSum = 0;
+        int n = arr.size();
+
+        for (int i = 0; i < n; i++) {
+            if (arr[i] > pages) return false;  
+
+            if (pagesSum + arr[i] <= pages) {
+                pagesSum += arr[i];
+            } else {
+                students++;
+                pagesSum = arr[i];
+            }
+        }
+        return students <= k;
+    }
+
+    int findPages(vector<int> &arr, int k) {
+        int n = arr.size();
+        if (k > n) return -1;  
+        int low = *max_element(arr.begin(), arr.end());   
+        int high = accumulate(arr.begin(), arr.end(), 0);  
+        int result = -1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (canWeAllocate(arr, k, mid)) {
+                result = mid;
+                high = mid - 1;  
+            } else {
+                low = mid + 1;   
+            }
+        }
+        return result;
+    }
+};
